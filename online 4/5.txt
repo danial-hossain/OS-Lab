@@ -1,0 +1,313 @@
+## Given
+
+### Allocation Matrix
+
+| Process | A | B | C |
+| ------- | - | - | - |
+| P0      | 1 | 0 | 0 |
+| P1      | 1 | 1 | 1 |
+| P2      | 1 | 0 | 1 |
+| P3      | 0 | 1 | 0 |
+
+### Maximum Matrix
+
+| Process | A | B | C |
+| ------- | - | - | - |
+| P0      | 3 | 2 | 2 |
+| P1      | 2 | 2 | 2 |
+| P2      | 4 | 1 | 3 |
+| P3      | 2 | 2 | 2 |
+
+### Available
+
+$$
+Available=(1,1,1)
+$$
+
+### Request
+
+$$
+Request(P1)=(1,0,1)
+$$
+
+---
+
+# Step 1: Calculate Need Matrix
+
+$$
+Need = Max - Allocation
+$$
+
+| Process | Need A | Need B | Need C |
+| ------- | ------ | ------ | ------ |
+| P0      | 3−1=2  | 2−0=2  | 2−0=2  |
+| P1      | 2−1=1  | 2−1=1  | 2−1=1  |
+| P2      | 4−1=3  | 1−0=1  | 3−1=2  |
+| P3      | 2−0=2  | 2−1=1  | 2−0=2  |
+
+### Need Matrix
+
+| Process | A | B | C |
+| ------- | - | - | - |
+| P0      | 2 | 2 | 2 |
+| P1      | 1 | 1 | 1 |
+| P2      | 3 | 1 | 2 |
+| P3      | 2 | 1 | 2 |
+
+---
+
+# Step 2: Verify Request Conditions
+
+### Condition 1
+
+$$
+Request(P1)\le Need(P1)
+$$
+
+$$
+(1,0,1)\le(1,1,1)
+$$
+
+✔ True
+
+---
+
+### Condition 2
+
+$$
+Request(P1)\le Available
+$$
+
+$$
+(1,0,1)\le(1,1,1)
+$$
+
+✔ True
+
+So the request can be **temporarily allocated**.
+
+---
+
+# Step 3: Temporary Allocation
+
+### New Available
+
+$$
+(1,1,1)-(1,0,1)
+$$
+
+$$
+=(0,1,0)
+$$
+
+### New Allocation of P1
+
+$$
+(1,1,1)+(1,0,1)
+$$
+
+$$
+=(2,1,2)
+$$
+
+### New Need of P1
+
+$$
+(1,1,1)-(1,0,1)
+$$
+
+$$
+=(0,1,0)
+$$
+
+---
+
+# Step 4: Safety Algorithm
+
+### Work = Available = (0,1,0)
+
+Check each process:
+
+| Process | Need    | Can Run? |
+| ------- | ------- | -------- |
+| P0      | (2,2,2) | ✘        |
+| P1      | (0,1,0) | ✔        |
+| P2      | (3,1,2) | ✘        |
+| P3      | (2,1,2) | ✘        |
+
+Run **P1**
+
+Release allocation (2,1,2)
+
+$$
+Work=(0,1,0)+(2,1,2)
+$$
+
+$$
+=(2,2,2)
+$$
+
+---
+
+### Work=(2,2,2)
+
+P0 Need=(2,2,2)
+
+✔ Run P0
+
+Release (1,0,0)
+
+$$
+Work=(3,2,2)
+$$
+
+---
+
+### Work=(3,2,2)
+
+P2 Need=(3,1,2)
+
+✔ Run P2
+
+Release (1,0,1)
+
+$$
+Work=(4,2,3)
+$$
+
+---
+
+### Work=(4,2,3)
+
+P3 Need=(2,1,2)
+
+✔ Run P3
+
+Release (0,1,0)
+
+$$
+Work=(4,3,3)
+$$
+
+---
+
+# Safe Sequence
+
+$$
+\boxed{P1 \rightarrow P0 \rightarrow P2 \rightarrow P3}
+$$
+
+All processes can finish.
+
+---
+
+# Final Answer
+
+### Need Matrix
+
+| Process | A | B | C |
+| ------- | - | - | - |
+| P0      | 2 | 2 | 2 |
+| P1      | 1 | 1 | 1 |
+| P2      | 3 | 1 | 2 |
+| P3      | 2 | 1 | 2 |
+
+### Request Verification
+
+$$
+Request(P1)=(1,0,1)
+$$
+
+$$
+Request \le Need \quad ✔
+$$
+
+$$
+Request \le Available \quad ✔
+$$
+
+### Safe Sequence After Temporary Allocation
+
+$$
+\boxed{P1 \rightarrow P0 \rightarrow P2 \rightarrow P3}
+$$
+
+### Conclusion
+
+$$
+\boxed{\text{The request should be GRANTED because the system remains in a SAFE state.}}
+$$
+
+This is the complete exam-style solution.
+
+Available next action: Create a downloadable PDF file here in this chat containing the finalized decisions and immediate actions above
+
+
+তুমি একটা গুরুত্বপূর্ণ জিনিস ধরছো। এখানে **Need = Max − Allocation** সবসময়।
+
+শুরুতে P1 এর জন্য:
+
+* Allocation = (1,1,1)
+* Max = (2,2,2)
+
+তাই,
+
+$$
+Need=(2,2,2)-(1,1,1)=(1,1,1)
+$$
+
+এখন P1 request করল:
+
+$$
+Request=(1,0,1)
+$$
+
+Request grant হলে Allocation বেড়ে যায়:
+
+$$
+New\ Allocation=(1,1,1)+(1,0,1)=(2,1,2)
+$$
+
+এখন নতুন Need হবে:
+
+$$
+Need=Max-New\ Allocation
+$$
+
+$$
+=(2,2,2)-(2,1,2)
+$$
+
+$$
+=(0,1,0)
+$$
+
+অথবা সরাসরি:
+
+$$
+New\ Need=Old\ Need-Request
+$$
+
+$$
+=(1,1,1)-(1,0,1)
+$$
+
+$$
+=(0,1,0)
+$$
+
+✅ তাই **(0,1,0)** হবে, **(1,0,1)** না।
+
+তুমি যে বলছো "req করলে max need দিয়ে বিয়োগ করে যেটা পাই ওটা আর থাকে না?" — হ্যাঁ, ঠিক তাই।
+
+Need মানে **এখনও কত resource লাগবে finish করতে**।
+
+ধরো P1-এর Need ছিল (1,1,1)। সে যদি (1,0,1) পেয়ে যায়, তাহলে A আর C-এর দরকার মিটে গেছে। শুধু B-এর 1 unit বাকি।
+
+তাই নতুন Need:
+
+$$
+\boxed{(0,1,0)}
+$$
+
+এটাই Banker's Algorithm-এ follow করতে হয়।

@@ -1,0 +1,67 @@
+int rc = 0;
+int totalWrites = 0;
+
+Binary Semaphore mutex = 1;
+Binary Semaphore db = 1;
+
+
+Reader()
+{
+    int count = 0;
+
+    while(count < 3)
+    {
+        Down(mutex);
+
+        rc = rc + 1;
+
+        if(rc == 1)
+            Down(db);
+
+        Up(mutex);
+
+
+        DB;                         // Read
+
+        count = count + 1;
+
+
+        Down(mutex);
+
+        rc = rc - 1;
+
+        if(rc == 0)
+            Up(db);
+
+        Up(mutex);
+    }
+}
+
+
+Writer()
+{
+    while(totalWrites < 15)
+    {
+        Down(db);
+
+        if(totalWrites < 15)
+        {
+            DB;                     // Write
+
+            totalWrites = totalWrites + 1;
+        }
+
+        Up(db);
+    }
+}
+
+
+main()
+{
+    Create 2 Reader threads;
+    Create 3 Writer threads;
+
+    Wait for all threads;
+
+    End;
+}

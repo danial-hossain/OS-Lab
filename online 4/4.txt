@@ -1,0 +1,303 @@
+## Given
+
+### Total Resources
+
+$$
+A=9,\quad B=9
+$$
+
+### Allocation and Need
+
+| Process | Allocation (A,B) | Need (A,B) |
+| ------- | ---------------- | ---------- |
+| P0      | (1,2)            | (1,0)      |
+| P1      | (2,1)            | (0,2)      |
+| P2      | (1,1)            | (2,1)      |
+| P3      | (2,2)            | (0,1)      |
+| P4      | (1,0)            | (1,2)      |
+
+---
+
+# Q1. Check Current Safe State
+
+### Available Resources
+
+Total Allocation:
+
+$$
+A=1+2+1+2+1=7
+$$
+
+$$
+B=2+1+1+2+0=6
+$$
+
+Therefore,
+
+$$
+Available=(9,9)-(7,6)
+$$
+
+$$
+\boxed{Available=(2,3)}
+$$
+
+---
+
+## Safety Algorithm
+
+### Available = (2,3)
+
+### P0
+
+Need=(1,0)
+
+$$
+(1,0)\le(2,3)
+$$
+
+✔ Execute P0
+
+Release (1,2)
+
+$$
+Available=(3,5)
+$$
+
+---
+
+### P1
+
+Need=(0,2)
+
+$$
+(0,2)\le(3,5)
+$$
+
+✔ Execute P1
+
+Release (2,1)
+
+$$
+Available=(5,6)
+$$
+
+---
+
+### P2
+
+Need=(2,1)
+
+$$
+(2,1)\le(5,6)
+$$
+
+✔ Execute P2
+
+Release (1,1)
+
+$$
+Available=(6,7)
+$$
+
+---
+
+### P3
+
+Need=(0,1)
+
+$$
+(0,1)\le(6,7)
+$$
+
+✔ Execute P3
+
+Release (2,2)
+
+$$
+Available=(8,9)
+$$
+
+---
+
+### P4
+
+Need=(1,2)
+
+$$
+(1,2)\le(8,9)
+$$
+
+✔ Execute P4
+
+Release (1,0)
+
+$$
+Available=(9,9)
+$$
+
+---
+
+### Safe Sequence
+
+$$
+\boxed{P0 \rightarrow P1 \rightarrow P2 \rightarrow P3 \rightarrow P4}
+$$
+
+✅ **System is currently SAFE.**
+
+---
+
+# Q2. Remove P1 from the System
+
+P1 is killed, so its allocated resources are returned.
+
+P1 Allocation:
+
+$$
+(2,1)
+$$
+
+Original Available:
+
+$$
+(2,3)
+$$
+
+New Available:
+
+$$
+(2,3)+(2,1)
+$$
+
+$$
+\boxed{(4,4)}
+$$
+
+Remaining processes:
+
+* P0
+* P2
+* P3
+* P4
+
+---
+
+## Safety Check Again
+
+### Available = (4,4)
+
+### P0
+
+Need=(1,0)
+
+✔ Run
+
+Release (1,2)
+
+$$
+Available=(5,6)
+$$
+
+---
+
+### P2
+
+Need=(2,1)
+
+✔ Run
+
+Release (1,1)
+
+$$
+Available=(6,7)
+$$
+
+---
+
+### P3
+
+Need=(0,1)
+
+✔ Run
+
+Release (2,2)
+
+$$
+Available=(8,9)
+$$
+
+---
+
+### P4
+
+Need=(1,2)
+
+✔ Run
+
+Release (1,0)
+
+$$
+Available=(9,9)
+$$
+
+---
+
+### Safe Sequence After Removing P1
+
+$$
+\boxed{P0 \rightarrow P2 \rightarrow P3 \rightarrow P4}
+$$
+
+✅ **The system remains SAFE even after P1 is removed.**
+
+---
+
+# Final Answer
+
+### Q1
+
+Available:
+
+$$
+\boxed{(2,3)}
+$$
+
+Safe Sequence:
+
+$$
+\boxed{P0 \rightarrow P1 \rightarrow P2 \rightarrow P3 \rightarrow P4}
+$$
+
+Therefore,
+
+$$
+\boxed{\text{System is SAFE}}
+$$
+
+---
+
+### Q2
+
+After removing P1:
+
+$$
+\boxed{Available=(4,4)}
+$$
+
+Safe Sequence:
+
+$$
+\boxed{P0 \rightarrow P2 \rightarrow P3 \rightarrow P4}
+$$
+
+Therefore,
+
+$$
+\boxed{\text{System is still SAFE after removing P1}}
+$$
+
+**Exam conclusion:**
+
+* Q1: Safe State ✔
+* Q2: Safe State ✔ (after P1 is removed)
